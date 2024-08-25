@@ -3,7 +3,7 @@ node('Open-JDK-11') {
         git branch: 'main', url: 'https://github.com/thippareddy03/spring-petclinic.git'
     }
     stage('Building Project') {
-        sh '/usr/share/maven package'
+        sh 'mvn package'
     }
     stage('Unit Tests') {
         junit '**/surefire-reports/*.xml'
