@@ -1,11 +1,11 @@
-node ('Open-JDK-11') {
+node('Open-JDK-11') {
     stage('Version Control') {
-        git branch: 'main', changelog: false, poll: false, url: 'https://github.com/thippareddy03/spring-petclinic.git'
+        git branch: 'main', url: 'https://github.com/thippareddy03/spring-petclinic.git'
     }
-    stage('Building the project') {
-        build wait: false, propagate: false, job: 'mvn package'
+    stage('Building Project') {
+        sh '/usr/share/maven package'
     }
-    stage('Archive results') {
+    stage('Unit Tests') {
         junit '**/surefire-reports/*.xml'
     }
 }
