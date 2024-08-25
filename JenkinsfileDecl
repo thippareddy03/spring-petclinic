@@ -1,0 +1,20 @@
+pipeline {
+    agent { label 'Open-JDK-11' }
+    stages {
+        stage ('Version Control'){
+            steps {
+                git branch: 'main', url: 'https://github.com/thippareddy03/spring-petclinic.git'
+            }
+        }
+        stage ('Bulding project'){
+            steps {
+                sh 'mvn package'
+            }
+        }
+        stage ('Unit tests') {
+            steps {
+                junit '**/surefire-reports/*.xml'
+            }
+        }
+    }
+}
