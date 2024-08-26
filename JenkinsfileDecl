@@ -1,5 +1,8 @@
 pipeline {
     agent { label 'Open-JDK-11' }
+    triggers {
+        cron('* * * * *')
+    }
     stages {
         stage ('Version Control'){
             steps {
