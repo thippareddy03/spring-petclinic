@@ -17,22 +17,22 @@ pipeline {
                 sh 'mvn package'            
             }
         }
-    post {
-        always {
-            echo "Bulid completed"
-                mail subject: "COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
-                  body: "Build Completed", 
-                  to: 'thippareddy1997@gmail.com'            
+        post {
+            always {
+                echo "Bulid completed"
+                    mail subject: "COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
+                        body: "Build Completed", 
+                        to: 'thippareddy1997@gmail.com'            
+            }
+            failure {
+                echo "Build failed"
+                    mail subject: "Failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
+                        body: "Build Failed", 
+                        to: 'thippareddy1997@gmail.com'            
+            }
+            success {
+                    junit '**/surefire-reports/*.xml'
+            }
         }
-        failure {
-            echo "Build failed"
-                mail subject: "Failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
-                  body: "Build Failed", 
-                  to: 'thippareddy1997@gmail.com'            
-        }
-        success {
-            junit '**/surefire-reports/*.xml'
-        }
-    }
     }
 }
