@@ -30,11 +30,9 @@ pipeline {
                   body: "Build Failed.Check console output at '${env.BUILD_URL}'", 
                   to: 'thippareddy1997@gmail.com'            
         }
-    }
-        stage ('Unit tests') {
-            steps {
-                junit '**/surefire-reports/*.xml'
-            }
+        success {
+            junit '**/surefire-reports/*.xml'
         }
+    }
     }
 }
