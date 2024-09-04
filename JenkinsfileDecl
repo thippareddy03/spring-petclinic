@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage ('Version Control'){
             steps {
-                mail subject: 'Build Started', 
+                mail subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
                   body: 'Build Started', 
                   to: 'thippareddy1997@gmail.com' 
                 git branch: 'main', url: 'https://github.com/thippareddy03/spring-petclinic.git'
