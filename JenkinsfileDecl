@@ -21,13 +21,13 @@ pipeline {
         always {
             echo "Bulid completed"
                 mail subject: "COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
-                  body: "Build Completed.Check console output at '${env.BUILD_URL}'", 
+                  body: "Build Completed", 
                   to: 'thippareddy1997@gmail.com'            
         }
         failure {
             echo "Build failed"
                 mail subject: "Failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
-                  body: "Build Failed.Check console output at '${env.BUILD_URL}'", 
+                  body: "Build Failed", 
                   to: 'thippareddy1997@gmail.com'            
         }
         success {
