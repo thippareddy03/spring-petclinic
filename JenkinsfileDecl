@@ -4,35 +4,37 @@ pipeline {
         cron('0 */12 * * *')
     }
     stages {
-        stage ('Version Control'){
+        stage('Version Control') {
             steps {
                 mail subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
-                  body: 'Build Started', 
-                  to: 'thippareddy1997@gmail.com' 
+                     body: 'Build Started', 
+                     to: 'thippareddy1997@gmail.com'
                 git branch: 'main', url: 'https://github.com/thippareddy03/spring-petclinic.git'
             }
         }
-        stage ('Bulding project'){
+        stage('Building project') {
             steps {
-                sh 'mvn package'            
+                sh 'mvn package'
             }
         }
-        post {
-            always {
-                echo "Bulid completed"
-                    mail subject: "COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
-                        body: "Build Completed", 
-                        to: 'thippareddy1997@gmail.com'            
+        stage ('Unit tests') {
+            steps {
+                junit '**/surefire-reports/*.xml'
             }
-            failure {
-                echo "Build failed"
-                    mail subject: "Failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
-                        body: "Build Failed", 
-                        to: 'thippareddy1997@gmail.com'            
-            }
-            success {
-                    junit '**/surefire-reports/*.xml'
-            }
+        }
+    }
+    post {
+        always {
+            echo "Build completed"
+            mail subject: "COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
+                 body: "Build Completed. Output consloe can be found at '${env.BUILD_URL}'", 
+                 to: 'thippareddy1997@gmail.com'
+        }
+        failure {
+            echo "Build failed"
+            mail subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
+                 body: "Build Failed.Output console can be found at '${env.BUILD_URL}'", 
+                 to: 'thippareddy1997@gmail.com'
         }
     }
 }
