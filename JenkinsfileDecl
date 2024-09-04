@@ -14,9 +14,23 @@ pipeline {
         }
         stage ('Bulding project'){
             steps {
-                sh 'mvn package'
+                sh 'mvn package'            
             }
         }
+    post {
+        always {
+            echo "Bulid completed"
+                mail subject: "COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
+                  body: 'Build Completed.Check console output at <a href='${env.BUILD_URL}'>'${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>'', 
+                  to: 'thippareddy1997@gmail.com'            
+        }
+        failure {
+            echo "Build failed"
+                mail subject: "Failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
+                  body: 'Build Failed.Check console output at <a href='${env.BUILD_URL}'>'${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>'', 
+                  to: 'thippareddy1997@gmail.com'            
+        }
+    }
         stage ('Unit tests') {
             steps {
                 junit '**/surefire-reports/*.xml'
