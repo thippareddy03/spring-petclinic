@@ -35,7 +35,7 @@ pipeline {
         stage('Building project') {
             steps {
                 rtMavenRun (
-                    tool: 'Maven 3.6.3',
+                    tool: 'MAVEN_3.6',
                     pom: 'pom.xml',
                     goals: '-U clean install',
                     deployerId: "maven-deployer",
