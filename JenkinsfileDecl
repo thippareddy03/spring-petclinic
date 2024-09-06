@@ -43,7 +43,7 @@ pipeline {
         }
     }
     post {
-        always {
+        success {
             echo "Build completed"
             mail subject: "COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", 
                  body: "Build Completed. Output consloe can be found at '${env.BUILD_URL}'", 
