@@ -12,9 +12,35 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/thippareddy03/spring-petclinic.git'
             }
         }
+        stage('Artifactory configuration') {
+            steps{
+                rtServer (
+                    id: "JFROG_ID", 
+                    url: "https://thippareddy.jfrog.io/",
+                )
+                rtMavenResolver (
+                    id: 'maven-deployer',
+                    serverId: 'JFROG_ID',
+                    releaseRepo: 'reddy-libs-release',
+                    snapshotRepo: 'reddy-libs-snapshot'
+                )
+                rtMavenDeployer (
+                    id: 'maven-deployer',
+                    serverId: 'JFROG_ID',
+                    releaseRepo: 'reddy-libs-release',
+                    snapshotRepo: 'reddy-libs-release',
+                )                                                
+            }
+        }
         stage('Building project') {
             steps {
-                sh 'mvn package'
+                rtMavenRun (
+                    tool: 'Maven 3.6.3',
+                    pom: 'pom.xml',
+                    goals: '-U clean install',
+                    deployerId: "maven-deployer",
+                    resolverId: "maven-deployer"
+                )
             }
         }
         stage ('Unit tests') {
