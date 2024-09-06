@@ -23,6 +23,7 @@ pipeline {
                     id: 'maven-deployer',
                     serverId: 'JFROG_ID',
                     releaseRepo: 'reddy-libs-release',
+                    snapshotRepo: 'reddy-libs-snapshot'
                 )                                                
             }
         }
