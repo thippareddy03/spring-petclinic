@@ -16,14 +16,14 @@ pipeline {
             steps{
                 rtServer (
                     id: "JFROG_ID", 
-                    url: "https://thippareddy.jfrog.io/artifactory/",
+                    url: "https://thippareddy.jfrog.io/artifactory",
                     credentialsId: "JFROG"
                 )
                 rtMavenDeployer (
                     id: 'maven-deployer',
                     serverId: 'JFROG_ID',
-                    releaseRepo: 'reddy-libs-release-local',
-                    snapshotRepo: 'reddy-libs-snapshot-local'
+                    releaseRepo: 'reddy-libs-release',
+                    snapshotRepo: 'reddy-libs-snapshot'
                 )                                                
             }
         }
