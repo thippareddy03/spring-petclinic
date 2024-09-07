@@ -22,8 +22,8 @@ pipeline {
                 rtMavenDeployer (
                     id: 'maven-deployer',
                     serverId: 'JFROG_ID',
-                    releaseRepo: 'reddy-libs-release',
-                    snapshotRepo: 'reddy-libs-snapshot'
+                    releaseRepo: 'reddy-libs-release-local',
+                    snapshotRepo: 'reddy-libs-snapshot-local'
                 )                                                
             }
         }
